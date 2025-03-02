@@ -29,3 +29,32 @@ mlruns/
 # DVC
 .dvc/
 /dvc.lock
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Weights & Biases
+wandb/
+
+# Environment variables
+.env
+.env.*
+
+# Temporary files
+tmp/
+temp/
+
+# Testing
+.coverage
+htmlcov/
