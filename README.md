@@ -19,8 +19,8 @@ mlops-learning/
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/mlops-learning.git
-cd mlops-learning
+git clone https://github.com/Suryatejakalapala/mlops.git
+cd mlops
 
 # Create and activate virtual environment
 python -m venv venv
