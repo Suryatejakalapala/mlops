@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# ML specific
+data/raw/
+data/processed/
+models/trained/
+*.pkl
+*.h5
+*.joblib
+
+# MLflow
+mlruns/
+
+# DVC
+.dvc/
+/dvc.lock
