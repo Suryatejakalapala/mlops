@@ -19,8 +19,8 @@ mlops-learning/
 
 ```bash
 # Clone repository
-git clone https://github.com/Suryatejakalapala/mlops.git
-cd mlops
+git clone https://github.com/yourusername/mlops-learning.git
+cd mlops-learning
 
 # Create and activate virtual environment
 python -m venv venv
@@ -88,10 +88,38 @@ pip install -r requirements.txt
 - A well-organized project structure saves time and reduces errors
 - Documentation should be treated as a first-class citizen from day one
 
+#### Day 3 – Git & GitHub Basics (Complete)
+
+**What I Learned:**
+- Core Git commands and workflow for version control
+- Best practices for ML project version control
+- How to structure branches, commits, and PRs effectively
+- Setting up proper gitignore files for ML projects
+
+**Tasks Completed:**
+- Initialized repository for the MLOps learning journey
+- Practiced git fundamentals: add, commit, push, pull, branch
+- Created first PR (Pull Request) with repository structure changes
+- Configured .gitignore specifically for ML projects (excluding large data files, model artifacts)
+- Set up GitHub Actions for basic CI workflow
+
+**Key Insights:**
+- Commit messages should be descriptive and follow consistent conventions
+- Branches help isolate development of features/experiments
+- Git LFS may be needed for larger model files
+- Model versioning requires different approaches than code versioning
+- Small, frequent commits are better than large, infrequent ones
+
+**Git Workflow Established:**
+- main branch: stable, production-ready code
+- develop branch: integration branch for features
+- feature branches: for new capabilities or experiments
+- Commit convention: `<type>: <description>` (e.g., "feat: add data preprocessing pipeline")
+
 ## Next Steps
 
-- Day 3: Learn Git & GitHub workflow best practices for ML projects
 - Day 4: Introduction to Docker for containerization
+- Day 5: Docker in Practice for ML applications
 - Complete Week 1 to establish a solid foundation in MLOps tools
 
 ## Resources
@@ -102,6 +130,9 @@ A collection of helpful resources I've discovered during this learning journey:
 - [Google Cloud's MLOps Architecture Pattern](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)
 - [Cookiecutter Data Science Project Template](https://drivendata.github.io/cookiecutter-data-science/)
 - [VS Code Python Setup Guide](https://code.visualstudio.com/docs/python/python-tutorial)
+- [GitHub Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
+- [Interactive Git Branching Tutorial](https://learngitbranching.js.org/)
+- [freeCodeCamp Git & GitHub Tutorial](https://www.freecodecamp.org/news/git-and-github-for-beginners/)
 
 ---
 
