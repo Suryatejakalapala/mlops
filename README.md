@@ -116,10 +116,50 @@ pip install -r requirements.txt
 - feature branches: for new capabilities or experiments
 - Commit convention: `<type>: <description>` (e.g., "feat: add data preprocessing pipeline")
 
+#### Day 4 – Docker Fundamentals (Complete)
+
+**What I Learned:**
+- Fundamentals of containerization and its benefits for ML systems
+- Docker components: images, containers, volumes, and networks
+- Docker CLI commands and Docker Desktop features
+- Container lifecycle management
+- The role of Docker in ensuring reproducible ML environments
+
+**Tasks Completed:**
+- Installed Docker Desktop and verified proper configuration
+- Ran the "Hello World" container successfully
+- Learned and practiced core Docker commands:
+  - `docker pull` to download images
+  - `docker run` to create and start containers
+  - `docker build` to create custom images
+  - `docker ps` to view running containers
+  - `docker images` to list available images
+- Explored Docker Hub and official images for data science
+- Understood the distinction between images and containers
+
+**Key Insights:**
+- Containers package the entire environment, eliminating "works on my machine" problems
+- Docker can standardize development, testing, and production environments
+- Base images should be selected carefully for ML workloads (consider Python version, CUDA support)
+- Alpine-based images offer smaller footprints but may have compatibility issues with some ML libraries
+- Using specific version tags instead of "latest" improves reproducibility
+
+**Docker Test:**
+```bash
+# Test Docker installation
+docker run hello-world
+
+# Run interactive Python container
+docker run -it python:3.9-slim python
+
+# List all containers (running and stopped)
+docker ps -a
+```
+
 ## Next Steps
 
-- Day 4: Introduction to Docker for containerization
 - Day 5: Docker in Practice for ML applications
+- Day 6: Exploring MLOps Challenges
 - Complete Week 1 to establish a solid foundation in MLOps tools
 
 ## Resources
@@ -133,6 +173,9 @@ A collection of helpful resources I've discovered during this learning journey:
 - [GitHub Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 - [Interactive Git Branching Tutorial](https://learngitbranching.js.org/)
 - [freeCodeCamp Git & GitHub Tutorial](https://www.freecodecamp.org/news/git-and-github-for-beginners/)
+- [Docker Get Started Guide](https://docs.docker.com/get-started/)
+- [Docker Cheat Sheet](https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf)
+- [Docker in 12 Minutes Video](https://www.youtube.com/watch?v=YFl2mCHdv24)
 
 ---
 
