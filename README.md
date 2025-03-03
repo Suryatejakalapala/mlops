@@ -5,14 +5,42 @@ This repository documents my journey through a structured 4-week MLOps learning 
 ## Project Structure
 
 ```
-mlops-learning/
-├── config/             # Configuration files
-├── data/               # Datasets (raw, processed, external)
-├── docs/               # Documentation
-├── models/             # Trained models and configurations
-├── notebooks/          # Jupyter notebooks for exploration
-├── src/                # Source code organized by functionality
-└── tests/              # Unit and integration tests
+mlops/
+├── config/                         # Configuration files
+├── data/                           # Datasets
+│   ├── external/                   # External data sources
+│   ├── processed/                  # Processed data ready for modeling
+│   └── raw/                        # Original, immutable data
+├── docs/                           # Documentation
+├── experiments/                    # Experiment tracking
+│   └── experiment1/
+│       └── README.md               # Experiment documentation
+├── models/                         # Model artifacts
+│   ├── config/                     # Model configurations
+│   └── trained/                    # Trained model files
+├── notebooks/                      # Jupyter notebooks for exploration
+├── src/                            # Source code
+│   ├── data/                       # Data operations
+│   ├── data_processing/            # Data processing modules
+│   │   ├── __init__.py
+│   │   └── preprocessing.py        # Data preprocessing logic
+│   ├── evaluation/                 # Model evaluation
+│   │   ├── __init__.py
+│   │   └── metrics.py              # Evaluation metrics
+│   ├── features/                   # Feature engineering
+│   ├── model_training/             # Model training code
+│   │   ├── __init__.py
+│   │   └── train.py                # Training script
+│   ├── models/                     # Model definitions
+│   └── visualization/              # Data/result visualization
+├── tests/                          # Unit and integration tests
+├── venv/                           # Virtual environment (not tracked by Git)
+├── .gitignore                      # Git ignore file
+├── git_notes.md                    # Notes on Git commands and workflow
+├── ml-canvas.pdf                   # ML project canvas
+├── README.md                       # This file
+├── requirements.txt                # Project dependencies
+└── setup.py                        # Package installation script
 ```
 
 ## Setup Instructions
