@@ -56,7 +56,7 @@ def population_stability_index(
     cur_dist = _histogram(current, edges)
     epsilon = 1e-4
     psi = 0.0
-    for b, c in zip(base_dist, cur_dist):
+    for b, c in zip(base_dist, cur_dist, strict=True):  # same edges -> same length
         b = max(b, epsilon)
         c = max(c, epsilon)
         psi += (c - b) * math.log(c / b)

@@ -107,33 +107,37 @@ def evaluate(rows: list[dict[str, Any]], rules: list[dict[str, Any]]) -> Quality
     return report
 
 
+def _violates(rule: dict[str, Any], value: Any) -> bool:
+    """True if a single value breaks a row-level rule."""
+    kind = rule.get("rule")
+    if kind == "not_null":
+        return not _present(value)
+    if not _present(value):
+        return False  # remaining rules only judge present values
+    if kind == "in_range":
+        try:
+            x = float(value)
+        except (TypeError, ValueError):
+            return True
+        lo, hi = rule.get("min"), rule.get("max")
+        return (lo is not None and x < lo) or (hi is not None and x > hi)
+    if kind == "matches":
+        return not re.search(rule.get("pattern", ""), str(value))
+    if kind == "allowed_values":
+        return value not in set(rule.get("values", []))
+    return False  # dataset-level rules (unique, row_count_min) aren't row-attributable
+
+
 def split_failing_rows(
     rows: list[dict[str, Any]], rules: list[dict[str, Any]]
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """Partition rows into (clean, quarantined) for row-level rules."""
-    quarantined_idx: set[int] = set()
-    for rule in rules:
-        kind = rule.get("rule")
-        column = rule.get("column", "")
-        for i, r in enumerate(rows):
-            v = r.get(column)
-            if kind == "not_null" and not _present(v):
-                quarantined_idx.add(i)
-            elif kind == "in_range" and _present(v):
-                try:
-                    x = float(v)
-                except (TypeError, ValueError):
-                    quarantined_idx.add(i)
-                    continue
-                lo, hi = rule.get("min"), rule.get("max")
-                if (lo is not None and x < lo) or (hi is not None and x > hi):
-                    quarantined_idx.add(i)
-            elif kind == "matches" and _present(v):
-                if not re.search(rule.get("pattern", ""), str(v)):
-                    quarantined_idx.add(i)
-            elif kind == "allowed_values" and _present(v):
-                if v not in set(rule.get("values", [])):
-                    quarantined_idx.add(i)
+    quarantined_idx = {
+        i
+        for rule in rules
+        for i, row in enumerate(rows)
+        if _violates(rule, row.get(rule.get("column", "")))
+    }
     clean = [r for i, r in enumerate(rows) if i not in quarantined_idx]
     quarantined = [r for i, r in enumerate(rows) if i in quarantined_idx]
     return clean, quarantined

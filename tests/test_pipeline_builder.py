@@ -1,7 +1,6 @@
 import json
 
 import pytest
-
 from ade.etl.pipeline_builder import (
     PipelineSpec,
     PipelineSpecError,

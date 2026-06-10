@@ -79,7 +79,9 @@ def compile_to_asl(spec: PipelineSpec, worker_lambda_arn: str) -> dict[str, Any]
     """Compile a PipelineSpec into a Step Functions state machine definition."""
     spec.validate()
 
-    def task(name: str, step: str, next_state: str | None, catch_to: str = "Quarantine") -> dict[str, Any]:
+    def task(
+        name: str, step: str, next_state: str | None, catch_to: str = "Quarantine"
+    ) -> dict[str, Any]:
         state: dict[str, Any] = {
             "Type": "Task",
             "Resource": worker_lambda_arn,

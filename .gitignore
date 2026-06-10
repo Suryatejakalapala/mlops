@@ -58,3 +58,9 @@ temp/
 # Testing
 .coverage
 htmlcov/
+# Terraform
+terraform/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan

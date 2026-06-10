@@ -111,9 +111,9 @@ resource "aws_sfn_state_machine" "retrain" {
             ChannelName = "train"
             DataSource = {
               S3DataSource = {
-                S3DataType                 = "S3Prefix"
-                "S3Uri.$"                  = "$.train_s3_uri"
-                S3DataDistributionType     = "FullyReplicated"
+                S3DataType             = "S3Prefix"
+                "S3Uri.$"              = "$.train_s3_uri"
+                S3DataDistributionType = "FullyReplicated"
               }
             }
           }]
@@ -137,8 +137,8 @@ resource "aws_sfn_state_machine" "retrain" {
         Next       = "PromotionGate"
       }
       PromotionGate = {
-        Type       = "Task"
-        Resource   = aws_lambda_function.ade["agent"].arn
+        Type     = "Task"
+        Resource = aws_lambda_function.ade["agent"].arn
         Parameters = {
           detail = {
             type           = "model_evaluated"
@@ -149,14 +149,14 @@ resource "aws_sfn_state_machine" "retrain" {
         End = true
       }
       NotifyFailure = {
-        Type       = "Task"
-        Resource   = aws_lambda_function.ade["agent"].arn
+        Type     = "Task"
+        Resource = aws_lambda_function.ade["agent"].arn
         Parameters = {
           detail = {
-            type           = "pipeline_failed"
-            "id.$"         = "$.job_name"
+            type            = "pipeline_failed"
+            "id.$"          = "$.job_name"
             "incident_id.$" = "$.job_name"
-            "error_text.$" = "States.JsonToString($.error)"
+            "error_text.$"  = "States.JsonToString($.error)"
           }
         }
         Next = "FailRetrain"

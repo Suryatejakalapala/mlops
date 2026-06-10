@@ -9,59 +9,59 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass, field
+from typing import Any
 
 
-def _bool(name: str, default: bool) -> bool:
-    raw = os.environ.get(name)
-    if raw is None:
-        return default
-    return raw.strip().lower() in ("1", "true", "yes", "on")
+def _env(name: str, default: str = "") -> Any:
+    return field(default_factory=lambda: os.environ.get(name, default))
+
+
+def _env_int(name: str, default: int) -> Any:
+    return field(default_factory=lambda: int(os.environ.get(name, str(default))))
+
+
+def _env_bool(name: str, default: bool) -> Any:
+    def parse() -> bool:
+        raw = os.environ.get(name)
+        if raw is None:
+            return default
+        return raw.strip().lower() in ("1", "true", "yes", "on")
+
+    return field(default_factory=parse)
 
 
 @dataclass(frozen=True)
 class Settings:
     # Identity
-    project: str = field(default_factory=lambda: os.environ.get("ADE_PROJECT", "ade"))
-    environment: str = field(default_factory=lambda: os.environ.get("ADE_ENV", "dev"))
-    region: str = field(default_factory=lambda: os.environ.get("AWS_REGION", "us-east-1"))
+    project: str = _env("ADE_PROJECT", "ade")
+    environment: str = _env("ADE_ENV", "dev")
+    region: str = _env("AWS_REGION", "us-east-1")
 
     # Storage
-    data_lake_bucket: str = field(default_factory=lambda: os.environ.get("ADE_DATA_LAKE_BUCKET", ""))
-    artifacts_bucket: str = field(default_factory=lambda: os.environ.get("ADE_ARTIFACTS_BUCKET", ""))
-    docs_bucket: str = field(default_factory=lambda: os.environ.get("ADE_DOCS_BUCKET", ""))
-    state_table: str = field(default_factory=lambda: os.environ.get("ADE_STATE_TABLE", ""))
+    data_lake_bucket: str = _env("ADE_DATA_LAKE_BUCKET")
+    artifacts_bucket: str = _env("ADE_ARTIFACTS_BUCKET")
+    docs_bucket: str = _env("ADE_DOCS_BUCKET")
+    state_table: str = _env("ADE_STATE_TABLE")
 
     # Messaging / orchestration
-    alerts_topic_arn: str = field(default_factory=lambda: os.environ.get("ADE_ALERTS_TOPIC_ARN", ""))
-    approvals_topic_arn: str = field(default_factory=lambda: os.environ.get("ADE_APPROVALS_TOPIC_ARN", ""))
-    event_bus_name: str = field(default_factory=lambda: os.environ.get("ADE_EVENT_BUS", "default"))
-    etl_state_machine_arn: str = field(default_factory=lambda: os.environ.get("ADE_ETL_SFN_ARN", ""))
-    retrain_state_machine_arn: str = field(default_factory=lambda: os.environ.get("ADE_RETRAIN_SFN_ARN", ""))
+    alerts_topic_arn: str = _env("ADE_ALERTS_TOPIC_ARN")
+    approvals_topic_arn: str = _env("ADE_APPROVALS_TOPIC_ARN")
+    event_bus_name: str = _env("ADE_EVENT_BUS", "default")
+    etl_state_machine_arn: str = _env("ADE_ETL_SFN_ARN")
+    retrain_state_machine_arn: str = _env("ADE_RETRAIN_SFN_ARN")
 
     # LLM planner (Claude on Amazon Bedrock — note the `anthropic.` prefix)
-    planner_model: str = field(
-        default_factory=lambda: os.environ.get("ADE_PLANNER_MODEL", "anthropic.claude-opus-4-8")
-    )
-    planner_max_tokens: int = field(
-        default_factory=lambda: int(os.environ.get("ADE_PLANNER_MAX_TOKENS", "16000"))
-    )
+    planner_model: str = _env("ADE_PLANNER_MODEL", "anthropic.claude-opus-4-8")
+    planner_max_tokens: int = _env_int("ADE_PLANNER_MAX_TOKENS", 16000)
 
     # Guardrails
-    dry_run: bool = field(default_factory=lambda: _bool("ADE_DRY_RUN", True))
-    max_actions_per_plan: int = field(
-        default_factory=lambda: int(os.environ.get("ADE_MAX_ACTIONS_PER_PLAN", "5"))
-    )
-    max_remediation_attempts: int = field(
-        default_factory=lambda: int(os.environ.get("ADE_MAX_REMEDIATION_ATTEMPTS", "3"))
-    )
-    monthly_llm_budget_usd: float = field(
-        default_factory=lambda: float(os.environ.get("ADE_MONTHLY_LLM_BUDGET_USD", "200"))
-    )
+    dry_run: bool = _env_bool("ADE_DRY_RUN", True)
+    max_actions_per_plan: int = _env_int("ADE_MAX_ACTIONS_PER_PLAN", 5)
+    max_remediation_attempts: int = _env_int("ADE_MAX_REMEDIATION_ATTEMPTS", 3)
+    monthly_llm_budget_usd: int = _env_int("ADE_MONTHLY_LLM_BUDGET_USD", 200)
 
     # CloudWatch
-    metrics_namespace: str = field(
-        default_factory=lambda: os.environ.get("ADE_METRICS_NAMESPACE", "ADE")
-    )
+    metrics_namespace: str = _env("ADE_METRICS_NAMESPACE", "ADE")
 
 
 def load_settings() -> Settings:

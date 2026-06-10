@@ -1,5 +1,4 @@
 import pytest
-
 from ade.agent.actions import ActionExecutor
 from ade.agent.memory import MemoryStore
 from ade.agent.orchestrator import Orchestrator
@@ -27,10 +26,9 @@ def settings(**overrides) -> Settings:
 
 
 def test_validate_rejects_unknown_action():
+    bad = {"name": "rm_rf_prod", "params": {}, "requires_approval": False}
     with pytest.raises(PlanValidationError):
-        validate_plan({"reasoning": "", "risk": "low",
-                       "actions": [{"name": "rm_rf_prod", "params": {}, "requires_approval": False}]},
-                      max_actions=5)
+        validate_plan({"reasoning": "", "risk": "low", "actions": [bad]}, max_actions=5)
 
 
 def test_validate_rejects_oversized_plan():
