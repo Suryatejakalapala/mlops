@@ -1,0 +1,4 @@
+# Runtime dependencies for the ADE Lambda package.
+# boto3/botocore are provided by the Lambda runtime; pinned here for local dev parity.
+anthropic[bedrock]>=0.92.0
+boto3>=1.34.0
