@@ -208,3 +208,22 @@ A collection of helpful resources I've discovered during this learning journey:
 ---
 
 *This README will be updated daily as I progress through the learning plan.*
+## ADE — Autonomous AI Data Engineer
+
+This repo now includes **ADE**, an event-driven autonomous data engineering
+agent built on AWS + Claude (Bedrock). It discovers data sources, builds ETL
+pipelines, detects schema/data drift, retrains models, monitors production,
+optimizes costs, generates documentation, and self-heals failures — with
+hard guardrails (action allowlist, dry-run default, human approval for
+destructive actions, retry circuit breakers).
+
+| Piece | Where |
+|---|---|
+| Agent + capability code | [`ade/`](ade/) |
+| Infrastructure (Terraform) | [`terraform/`](terraform/) |
+| CI/CD | [`.github/workflows/`](.github/workflows/) |
+| Architecture | [`docs/ade/architecture.md`](docs/ade/architecture.md) |
+| Security model | [`docs/ade/security-model.md`](docs/ade/security-model.md) |
+| Cost analysis | [`docs/ade/cost-analysis.md`](docs/ade/cost-analysis.md) |
+| Runbook (deploy + ops) | [`docs/ade/runbook.md`](docs/ade/runbook.md) |
+| Tests | [`tests/`](tests/) — `make test` |
