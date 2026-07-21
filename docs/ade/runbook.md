@@ -21,6 +21,24 @@ Prerequisites: Bedrock model access for Anthropic models enabled in the
 account/region, and a GitHub OIDC deploy role for CI
 (`secrets.AWS_DEPLOY_ROLE_ARN`, `secrets.ALERT_EMAIL`).
 
+### Enabling the Deploy workflow
+
+The `Deploy` workflow (`.github/workflows/deploy.yml`) is **dormant by
+default** — both jobs are gated on the repository variable `DEPLOY_ENABLED`,
+so merges to `master` don't attempt an AWS deploy (and don't email failures)
+until the account is wired up. To turn it on:
+
+1. Create the GitHub OIDC deploy role in AWS and a Terraform state backend
+   (S3 + DynamoDB lock table — see `terraform/versions.tf` backend block).
+2. Add repository **secrets** `AWS_DEPLOY_ROLE_ARN` and `ALERT_EMAIL`
+   (Settings → Secrets and variables → Actions → Secrets).
+3. Add repository **variable** `DEPLOY_ENABLED=true`
+   (same page → Variables tab).
+4. Configure the `production` environment with required reviewers so the
+   `apply` job waits for approval.
+
+Until step 3, `terraform apply` remains a manual, local operation (below).
+
 ### Graduating from dry-run
 
 After reviewing decisions in DynamoDB (`pk` begins with `DECISION#`) and
