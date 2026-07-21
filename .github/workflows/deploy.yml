@@ -24,6 +24,12 @@ jobs:
   plan:
     name: Terraform plan
     runs-on: ubuntu-latest
+    # Deploy stays dormant until the AWS prerequisites exist. Set the repo
+    # variable DEPLOY_ENABLED=true (Settings → Secrets and variables →
+    # Actions → Variables) once AWS_DEPLOY_ROLE_ARN + ALERT_EMAIL secrets and
+    # the OIDC role / Terraform backend are in place. Until then both jobs
+    # skip cleanly, so merges to master don't send failed-deploy emails.
+    if: ${{ vars.DEPLOY_ENABLED == 'true' }}
     steps:
       - uses: actions/checkout@v5
 
@@ -62,6 +68,7 @@ jobs:
     name: Terraform apply
     runs-on: ubuntu-latest
     needs: [plan]
+    if: ${{ vars.DEPLOY_ENABLED == 'true' }}
     # Protected environment => required reviewers gate production applies.
     environment: production
     steps:
